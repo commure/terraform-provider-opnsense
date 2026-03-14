@@ -274,8 +274,47 @@ func (p *OPNsenseProvider) Configure(ctx context.Context, req provider.Configure
 
 func (p *OPNsenseProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
+		// Auth
+		service.NewAuthUserResource,
+		service.NewAuthGroupResource,
+		// Bind
+		service.NewBindAclResource,
+		service.NewBindPrimaryDomainResource,
+		service.NewBindRecordResource,
+		// Dnsmasq
+		service.NewDnsmasqBootResource,
+		service.NewDnsmasqDomainResource,
+		service.NewDnsmasqHostResource,
+		service.NewDnsmasqOptionResource,
+		service.NewDnsmasqRangeResource,
+		service.NewDnsmasqTagResource,
+		// Firewall
+		service.NewFirewallFilterResource,
+		service.NewFirewallNATResource,
+		service.NewFirewallAliasResource,
+		service.NewFirewallCategoryResource,
+		service.NewFirewallNatOneToOneResource,
 		// Interfaces
 		service.NewInterfacesVlanResource,
+		service.NewInterfacesAssignResource,
+		service.NewInterfacesVipResource,
+		// IPsec
+		service.NewIPsecConnectionResource,
+		service.NewIPsecAuthLocalResource,
+		service.NewIPsecAuthRemoteResource,
+		service.NewIPsecChildResource,
+		service.NewIPsecPSKResource,
+		service.NewIPsecVTIResource,
+		// Kea
+		service.NewKeaSubnetResource,
+		service.NewKeaPeerResource,
+		service.NewKeaReservationResource,
+		// Quagga
+		service.NewQuaggaBGPNeighborResource,
+		service.NewQuaggaBGPASPathResource,
+		service.NewQuaggaBGPPrefixListResource,
+		service.NewQuaggaBGPCommunityListResource,
+		service.NewQuaggaBGPRouteMapResource,
 		// Routes
 		service.NewRouteResource,
 		// Unbound
@@ -286,30 +325,54 @@ func (p *OPNsenseProvider) Resources(ctx context.Context) []func() resource.Reso
 		// Wireguard
 		service.NewWireguardServerResource,
 		service.NewWireguardClientResource,
-		// Quagga
-		service.NewQuaggaBGPNeighborResource,
-		service.NewQuaggaBGPASPathResource,
-		service.NewQuaggaBGPPrefixListResource,
-		service.NewQuaggaBGPCommunityListResource,
-		service.NewQuaggaBGPRouteMapResource,
-		// Firewall
-		service.NewFirewallFilterResource,
-		service.NewFirewallNATResource,
-		service.NewFirewallAliasResource,
-		service.NewFirewallCategoryResource,
-		// Kea
-		service.NewKeaSubnetResource,
-		service.NewKeaPeerResource,
-		service.NewKeaReservationResource,
 	}
 }
 
 func (p *OPNsenseProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
+		// Auth
+		service.NewAuthUserDataSource,
+		service.NewAuthGroupDataSource,
+		// Bind
+		service.NewBindAclDataSource,
+		service.NewBindPrimaryDomainDataSource,
+		service.NewBindRecordDataSource,
+		// Dnsmasq
+		service.NewDnsmasqBootDataSource,
+		service.NewDnsmasqDomainDataSource,
+		service.NewDnsmasqHostDataSource,
+		service.NewDnsmasqOptionDataSource,
+		service.NewDnsmasqRangeDataSource,
+		service.NewDnsmasqTagDataSource,
+		// Firewall
+		service.NewFirewallFilterDataSource,
+		service.NewFirewallNATDataSource,
+		service.NewFirewallAliasDataSource,
+		service.NewFirewallCategoryDataSource,
+		service.NewFirewallNatOneToOneDataSource,
 		// Interfaces
 		service.NewInterfacesVlanDataSource,
 		service.NewInterfaceDataSource,
 		service.NewInterfaceAllDataSource,
+		service.NewInterfacesAssignDataSource,
+		service.NewInterfacesVipDataSource,
+		// IPsec
+		service.NewIPsecConnectionDataSource,
+		service.NewIPsecAuthLocalDataSource,
+		service.NewIPsecAuthRemoteDataSource,
+		service.NewIPsecChildDataSource,
+		service.NewIPsecPSKDataSource,
+		service.NewIPsecVTIDataSource,
+		// Kea
+		service.NewKeaSubnetDataSource,
+		service.NewKeaPeerDataSource,
+		service.NewKeaReservationDataSource,
+		// Quagga
+		service.NewQuaggaBGPNeighborDataSource,
+		service.NewQuaggaBGPASPathDataSource,
+		service.NewQuaggaBGPPrefixListDataSource,
+		service.NewQuaggaBGPCommunityListDataSource,
+		service.NewQuaggaBGPRouteMapDataSource,
 		// Routes
 		service.NewRouteDataSource,
 		// Unbound
@@ -320,21 +383,6 @@ func (p *OPNsenseProvider) DataSources(ctx context.Context) []func() datasource.
 		// Wireguard
 		service.NewWireguardServerDataSource,
 		service.NewWireguardClientDataSource,
-		// Quagga
-		service.NewQuaggaBGPNeighborDataSource,
-		service.NewQuaggaBGPASPathDataSource,
-		service.NewQuaggaBGPPrefixListDataSource,
-		service.NewQuaggaBGPCommunityListDataSource,
-		service.NewQuaggaBGPRouteMapDataSource,
-		// Firewall
-		service.NewFirewallFilterDataSource,
-		service.NewFirewallNATDataSource,
-		service.NewFirewallAliasDataSource,
-		service.NewFirewallCategoryDataSource,
-		// Kea
-		service.NewKeaSubnetDataSource,
-		service.NewKeaPeerDataSource,
-		service.NewKeaReservationDataSource,
 	}
 }
 

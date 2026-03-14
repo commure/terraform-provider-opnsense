@@ -192,7 +192,7 @@ func convertFirewallAliasSchemaToStruct(d *FirewallAliasResourceModel) (*firewal
 		Enabled:     tools.BoolToString(d.Enabled.ValueBool()),
 		Name:        d.Name.ValueString(),
 		Type:        api.SelectedMap(d.Type.ValueString()),
-		IPProtocol:  api.SelectedMap(d.IPProtocol.ValueString()),
+		IPProtocol:  api.SelectedMapList{d.IPProtocol.ValueString()},
 		Interface:   api.SelectedMap(d.Interface.ValueString()),
 		Content:     contentList,
 		Categories:  categoriesList,
@@ -207,7 +207,7 @@ func convertFirewallAliasStructToSchema(d *firewall.Alias) (*FirewallAliasResour
 		Enabled:     types.BoolValue(tools.StringToBool(d.Enabled)),
 		Name:        types.StringValue(d.Name),
 		Type:        types.StringValue(d.Type.String()),
-		IPProtocol:  types.StringValue(d.IPProtocol.String()),
+		IPProtocol:  types.StringValue(d.IPProtocol.String()),  // SelectedMapList → string via .String()
 		Interface:   types.StringValue(d.Interface.String()),
 		Content:     types.SetNull(types.StringType),
 		Categories:  types.SetNull(types.StringType),
