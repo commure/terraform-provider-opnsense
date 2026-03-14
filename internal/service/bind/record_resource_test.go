@@ -1,0 +1,50 @@
+package bind_test
+
+import (
+	"fmt"
+	"testing"
+
+	"github.com/browningluke/terraform-provider-opnsense/internal/acctest"
+	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+)
+
+func TestAccBindRecordResource(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		PreCheck:                 func() { acctest.AccPreCheck(t) },
+		ProtoV6ProviderFactories: acctest.ProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccBindRecordResourceConfig("www", "A", "192.168.1.1", "1"),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("opnsense_bind_record.test", "name", "www"),
+					resource.TestCheckResourceAttr("opnsense_bind_record.test", "type", "A"),
+					resource.TestCheckResourceAttr("opnsense_bind_record.test", "value", "192.168.1.1"),
+					resource.TestCheckResourceAttr("opnsense_bind_record.test", "enabled", "1"),
+					resource.TestCheckResourceAttrSet("opnsense_bind_record.test", "id"),
+				),
+			},
+			{
+				ResourceName:      "opnsense_bind_record.test",
+				ImportState:       true,
+				ImportStateVerify: true,
+			},
+			{
+				Config: testAccBindRecordResourceConfig("www", "A", "192.168.1.2", "1"),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					resource.TestCheckResourceAttr("opnsense_bind_record.test", "value", "192.168.1.2"),
+				),
+			},
+		},
+	})
+}
+
+func testAccBindRecordResourceConfig(name, recordType, value, enabled string) string {
+	return fmt.Sprintf(`
+resource "opnsense_bind_record" "test" {
+  name    = %[1]q
+  type    = %[2]q
+  value   = %[3]q
+  enabled = %[4]q
+}
+`, name, recordType, value, enabled)
+}
